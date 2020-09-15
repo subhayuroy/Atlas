@@ -110,7 +110,7 @@ def fuse_scene(path_meta, scene, voxel_size, trunc_ratio=3, max_depth=3,
 
     # integrate frames
     for i, frame in enumerate(dataloader):
-        if verbose>1 and i%25==0:
+        if verbose > 1 and i % 25 == 0:
             print(scene, 'integrating voxel size', voxel_size, i, len(dataset))
 
         projection = frame['projection'].to(device)
@@ -162,7 +162,7 @@ def label_scene(path_meta, scene, voxel_size, dist_thresh=.05, verbose=2):
 
     # dist_thresh: beyond this distance to nearest gt mesh vertex, 
     # voxels are not labeled
-    if verbose>0:
+    if verbose > 0:
         print('labeling', scene)
 
     info_file = os.path.join(path_meta, scene, 'info.json')
@@ -188,7 +188,7 @@ def label_scene(path_meta, scene, voxel_size, dist_thresh=.05, verbose=2):
 
     # construct kdtree of vertices for fast nn lookup
     pcd = o3d.geometry.PointCloud()
-    pcd.points  = o3d.utility.Vector3dVector(verts)
+    pcd.points = o3d.utility.Vector3dVector(verts)
     kdtree = o3d.geometry.KDTreeFlann(pcd)
 
     # load tsdf volume
@@ -247,14 +247,14 @@ def prepare_scannet(path, path_meta, i=0, n=1, test_only=False, max_depth=3):
 
     scenes = scenes[i::n]
 
-    if i==0:
+    if i == 0:
         prepare_scannet_splits(path, path_meta)
 
     for scene in scenes:
         prepare_scannet_scene(scene, path, path_meta)
         for voxel_size in [4,8,16]:
             fuse_scene(path_meta, scene, voxel_size, device=i%8, max_depth=max_depth)
-            if scene.split('/')[0]=='scans':
+            if scene.split('/')[0] == 'scans':
                 label_scene(path_meta, scene, voxel_size)
 
 
@@ -319,8 +319,8 @@ if __name__ == "__main__":
         help='mask out large depth values since they are noisy')
     args = parser.parse_args()
 
-    i=args.i
-    n=args.n
+    i = args.i
+    n = args.n
     assert 0<=i and i<n
 
     if args.dataset == 'sample':

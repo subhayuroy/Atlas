@@ -171,4 +171,5 @@ def main():
     for scene in scenes:
         process(scene, args.pathout, args.stride, args.scale)
 
-main()
+if __name__=='__main__':
+    main()
