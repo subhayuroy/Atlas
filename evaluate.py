@@ -72,7 +72,7 @@ class Renderer():
 
 
 def process(info_file, save_path, total_scenes_index, total_scenes_count):
-
+    zx = 12
     # gt depth data loader
     width, height = 640, 480
     transform = transforms.Compose([
